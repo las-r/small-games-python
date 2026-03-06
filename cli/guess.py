@@ -6,7 +6,6 @@ import random
 # settings
 rmin, rmax = 1, 1000
 
-
 # game variables
 rand = random.randint(rmin, rmax)
 guess = rmax + 1
