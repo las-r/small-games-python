@@ -4,7 +4,7 @@ import time
 
 # dvd logo made by las-r on github
 
-# THIS REQUIRES DVD IMAGES AT dvd/
+# THIS REQUIRES DVD IMAGES AT images/
 # THEY CAN BE FOUND HERE:
 # https://github.com/las-r/dvd-logo/tree/main/images
 
