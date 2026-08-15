@@ -1,5 +1,6 @@
 from pyray import * #type:ignore
 from numba import njit
+import math
 
 # mandelbrot set explorer
 # made by las-r on github
@@ -8,20 +9,20 @@ from numba import njit
 # IF YOU WANT TO GET RID OF IT, REMOVE THE IMPORT AND FUNCTION DECORATOR
 
 # settings
-WIDTH, HEIGHT = 800, 450
+WIDTH, HEIGHT = 600, 400
 BOUND = 2
-MAXITER = 50
+ABSMAXITER = 2000
 
 # mandelbrot function
 @njit
-def ziter(cr, ci):
+def ziter(cr, ci, maxi):
     x, y = 0.0, 0.0
-    for i in range(MAXITER):
+    for i in range(maxi):
         x2, y2 = x*x, y*y
         if x2 + y2 > 4: return i
         y = 2*x*y + ci
         x = x2 - y2 + cr
-    return MAXITER
+    return maxi
 
 # helpers
 def creal(px):
@@ -37,14 +38,14 @@ set_target_fps(60)
 
 # setup colors
 colors = []
-for i in range(MAXITER):
+for i in range(ABSMAXITER):
     colors.append(color_from_hsv(i * 10 % 360, 0.8, 1.0))
 colors.append(BLACK)
 
 # variables
 tx, ty = -0.5, 0.0
 zoom = 1.0
-scale = 10
+scale = 8
 
 # other variables
 sw, sh = WIDTH // scale, HEIGHT // scale
@@ -85,12 +86,16 @@ while not window_should_close():
         unload_texture(tex)
         img = gen_image_color(sw, sh, BLACK)
         tex = load_texture_from_image(img)
+        
+    # compute max iterations
+    maxi = min(int(50 + 25 * math.log10(max(1, zoom))), ABSMAXITER)
     
     # create image
     for py in range(sh):
         for px in range(sw):
-            i = ziter(creal(px), cimag(py))
-            image_draw_pixel(img, px, py, colors[i])
+            i = ziter(creal(px), cimag(py), maxi)
+            color = BLACK if i == maxi else colors[i]
+            image_draw_pixel(img, px, py, color)
     update_texture(tex, img.data)
     
     # draw mandelbrot image
