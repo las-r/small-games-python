@@ -12,7 +12,7 @@ Additional files **only exist when necessary**, such as:
 - Simple assets required by the game
 
 ### How is this organized?
-Games are organized by user interface type. Each folder contains games that use the same type of interface.
+Games are organized by user interface type, **NOT the genre of game**. Each folder contains games that use the same type of interface.
 
 Current categories:
 - [Arcade](https://github.com/las-r/small-games-python/tree/main/arcade)
