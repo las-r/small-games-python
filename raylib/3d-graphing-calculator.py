@@ -87,7 +87,7 @@ while not window_should_close():
         if is_key_pressed(KeyboardKey.KEY_EQUAL):  step += 0.25
         if is_key_pressed(KeyboardKey.KEY_MINUS): step = max(0.25, step - 0.25)
         if is_key_pressed(KeyboardKey.KEY_R): 
-            step = 1
+            step = 0.25
             size = 5
         if is_key_pressed(KeyboardKey.KEY_F):
             typing = not typing
@@ -106,7 +106,11 @@ while not window_should_close():
 
     # draw cached lines
     for line in lcache:
-        draw_line_3d(line[0], line[1], GREEN)
+        if line[0].y < 0:
+            lcol = Color(0, 155, 0, 255)  
+        else:
+            lcol = GREEN
+        draw_line_3d(line[0], line[1], lcol)
 
     # draw end
     end_mode_3d()
