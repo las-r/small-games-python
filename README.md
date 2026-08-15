@@ -15,6 +15,7 @@ Additional files **only exist when necessary**, such as:
 Games are organized by user interface type. Each folder contains games that use the same type of interface.
 
 Current categories:
+- [Arcade](https://github.com/las-r/small-games-python/tree/main/arcade)
 - [Command-Line](https://github.com/las-r/small-games-python/tree/main/cli)
 - [Pygame](https://github.com/las-r/small-games-python/tree/main/pygame)
 - [Raylib](https://github.com/las-r/small-games-python/tree/main/raylib) *(Note: please use the [raylib-python-cffi](https://github.com/electronstudio/raylib-python-cffi) bindings)*
