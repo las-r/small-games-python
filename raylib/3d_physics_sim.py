@@ -1,4 +1,5 @@
 from pyray import * #type:ignore
+import math
 import random
 
 # 3d physics sim
@@ -17,7 +18,7 @@ class Ball:
 WIDTH, HEIGHT = 800, 600
 FS = 20
 HFS = FS / 2
-grav = Vector3(0, -200, 0)
+grav = Vector3(0, -50, 0)
         
 # init
 init_window(WIDTH, HEIGHT, "3D Physics Simulation")
@@ -31,6 +32,8 @@ cam.target = Vector3(0, FS / 2, 0)
 cam.up = Vector3(0, 1, 0)
 cam.fovy = 45
 cam.projection = CameraProjection.CAMERA_PERSPECTIVE
+angle = 0.0
+rotspeed = 0.2
 
 # balls
 balls = []
@@ -39,7 +42,10 @@ balls = []
 paused = False
 while not window_should_close():
     dt = get_frame_time()
-    update_camera(cam, CameraMode.CAMERA_ORBITAL)
+    angle += rotspeed * dt
+    cam.position.x = math.sin(angle) * (FS * 2)
+    cam.position.z = math.cos(angle) * (FS * 2)
+    update_camera(cam, CameraMode.CAMERA_CUSTOM)
     
     # input
     if is_key_pressed(KeyboardKey.KEY_R):
@@ -84,7 +90,7 @@ while not window_should_close():
                         b.vel = vector3_subtract(b.vel, impulse)
                         q.vel = vector3_add(q.vel, impulse)
             
-            # wwall bounce
+            # wall bounce
             if b.pos.x - b.r < -HFS:
                 b.pos.x = -HFS + b.r
                 b.vel.x = abs(b.vel.x * b.e)
